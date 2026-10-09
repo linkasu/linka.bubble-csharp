@@ -7,7 +7,7 @@ Unicode true
 !endif
 
 Name "Линка.Пузырик"
-OutFile "${SOURCE_ROOT}/Linka.Bubble.Setup.exe"
+OutFile "${SOURCE_ROOT}\Linka.Bubble.Setup.exe"
 InstallDir "$LOCALAPPDATA\Programs\LINKa\Bubble"
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
@@ -41,13 +41,13 @@ FunctionEnd
 
 Section "Линка.Пузырик" Install
     SetOutPath "$INSTDIR"
-    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Linka.Bubble.exe"
-    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Linka.Bubble.exe.config"
-    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.EyeX.Client.dll"
-    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.Interaction.Model.dll"
-    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.Interaction.Net.dll"
-    File "${SOURCE_ROOT}/README.md"
-    File "${SOURCE_ROOT}/TESTING.md"
+    File "${SOURCE_ROOT}\Bubble\bin\x64\Release\net48\Linka.Bubble.exe"
+    File "${SOURCE_ROOT}\Bubble\bin\x64\Release\net48\Linka.Bubble.exe.config"
+    File "${SOURCE_ROOT}\Bubble\bin\x64\Release\net48\Tobii.EyeX.Client.dll"
+    File "${SOURCE_ROOT}\Bubble\bin\x64\Release\net48\Tobii.Interaction.Model.dll"
+    File "${SOURCE_ROOT}\Bubble\bin\x64\Release\net48\Tobii.Interaction.Net.dll"
+    File "${SOURCE_ROOT}\README.md"
+    File "${SOURCE_ROOT}\TESTING.md"
     WriteUninstaller "$INSTDIR\Uninstall.exe"
 
     CreateDirectory "$SMPROGRAMS\LINKa"
