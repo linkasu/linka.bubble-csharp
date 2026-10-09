@@ -2,10 +2,12 @@ Unicode true
 !include "MUI2.nsh"
 !include "LogicLib.nsh"
 !include "x64.nsh"
-!cd ".."
+!ifndef SOURCE_ROOT
+    !error "Pass -DSOURCE_ROOT=<absolute project path> to makensis"
+!endif
 
 Name "Линка.Пузырик"
-OutFile "Linka.Bubble.Setup.exe"
+OutFile "${SOURCE_ROOT}/Linka.Bubble.Setup.exe"
 InstallDir "$LOCALAPPDATA\Programs\LINKa\Bubble"
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
@@ -39,13 +41,13 @@ FunctionEnd
 
 Section "Линка.Пузырик" Install
     SetOutPath "$INSTDIR"
-    File "Bubble/bin/x64/Release/net48/Linka.Bubble.exe"
-    File "Bubble/bin/x64/Release/net48/Linka.Bubble.exe.config"
-    File "Bubble/bin/x64/Release/net48/Tobii.EyeX.Client.dll"
-    File "Bubble/bin/x64/Release/net48/Tobii.Interaction.Model.dll"
-    File "Bubble/bin/x64/Release/net48/Tobii.Interaction.Net.dll"
-    File "README.md"
-    File "TESTING.md"
+    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Linka.Bubble.exe"
+    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Linka.Bubble.exe.config"
+    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.EyeX.Client.dll"
+    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.Interaction.Model.dll"
+    File "${SOURCE_ROOT}/Bubble/bin/x64/Release/net48/Tobii.Interaction.Net.dll"
+    File "${SOURCE_ROOT}/README.md"
+    File "${SOURCE_ROOT}/TESTING.md"
     WriteUninstaller "$INSTDIR\Uninstall.exe"
 
     CreateDirectory "$SMPROGRAMS\LINKa"

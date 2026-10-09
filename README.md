@@ -14,7 +14,7 @@ dotnet build Bubble/Bubble.csproj -c Release -p:Platform=x64
 dotnet run --project Checks/Checks.csproj -c Release
 ```
 
-Сборка также выполняется установленным .NET SDK на macOS, но запуск Windows-приложения и испытание трекера возможны только на Windows. Для установки запустите `Linka.Bubble.Setup.exe` — файл доступен среди артефактов Windows CI либо собирается после проекта командой `makensis Installer/Bubble.nsi`. Установщик не требует прав администратора. Можно также запустить `Bubble/bin/x64/Release/net48/Linka.Bubble.exe` на Windows. Значок в системном трее открывает настройки, скрывает пузырёк и завершает приложение. Файлы настроек хранятся в `%LOCALAPPDATA%\LINKa\Bubble\settings.json`; координаты не сохраняются. При удалении приложения настройки сохраняются.
+Сборка также выполняется установленным .NET SDK на macOS, но запуск Windows-приложения и испытание трекера возможны только на Windows. Для установки запустите `Linka.Bubble.Setup.exe` — файл доступен среди артефактов Windows CI либо собирается после проекта командой `makensis "-DSOURCE_ROOT=$PWD" Installer/Bubble.nsi` на macOS (на Windows передайте абсолютный путь к проекту). Установщик не требует прав администратора. Можно также запустить `Bubble/bin/x64/Release/net48/Linka.Bubble.exe` на Windows. Значок в системном трее открывает настройки, скрывает пузырёк и завершает приложение. Файлы настроек хранятся в `%LOCALAPPDATA%\LINKa\Bubble\settings.json`; координаты не сохраняются. При удалении приложения настройки сохраняются.
 
 ## Ограничения выпуска
 

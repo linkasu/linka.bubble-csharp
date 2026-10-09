@@ -28,9 +28,7 @@ jobs:
         shell: pwsh
         run: |
           choco install nsis --yes --no-progress
-          Push-Location Installer
-          try { & 'C:\Program Files (x86)\NSIS\makensis.exe' Bubble.nsi }
-          finally { Pop-Location }
+          & 'C:\Program Files (x86)\NSIS\makensis.exe' "-DSOURCE_ROOT=$((Get-Location).Path)" Installer/Bubble.nsi
       - name: Smoke-test install and uninstall
         shell: pwsh
         run: |
