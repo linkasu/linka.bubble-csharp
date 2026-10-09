@@ -1,0 +1,44 @@
+name: Windows build
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore Bubble/Bubble.csproj -p:Platform=x64
+      - name: Build
+        run: dotnet build Bubble/Bubble.csproj --no-restore -c Release -p:Platform=x64
+      - name: Check native architecture
+        shell: pwsh
+        run: |
+          $file = 'Bubble/bin/x64/Release/net48/Tobii.EyeX.Client.dll'
+          if (!(Test-Path $file)) { throw "Missing Tobii native DLL: $file" }
+          $bytes = [IO.File]::ReadAllBytes($file)
+          $offset = [BitConverter]::ToInt32($bytes, 0x3c)
+          if ([BitConverter]::ToUInt16($bytes, $offset + 4) -ne 0x8664) { throw 'Tobii native DLL is not x64' }
+      - name: Run focused checks
+        run: dotnet run --project Checks/Checks.csproj -c Release
+      - name: Build installer
+        shell: pwsh
+        run: |
+          choco install nsis --yes --no-progress
+          & 'C:\Program Files (x86)\NSIS\makensis.exe' Installer/Bubble.nsi
+      - name: Smoke-test install and uninstall
+        shell: pwsh
+        run: |
+          $app = Join-Path $env:LOCALAPPDATA 'Programs\LINKa\Bubble\Linka.Bubble.exe'
+          $installer = Start-Process -FilePath (Resolve-Path 'Linka.Bubble.Setup.exe') -ArgumentList '/S' -Wait -PassThru
+          if ($installer.ExitCode -ne 0 -or !(Test-Path $app)) { throw 'Installation failed' }
+          $uninstaller = Start-Process -FilePath (Join-Path (Split-Path $app) 'Uninstall.exe') -ArgumentList '/S' -Wait -PassThru
+          if ($uninstaller.ExitCode -ne 0 -or (Test-Path $app)) { throw 'Uninstallation failed' }
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: Linka-Bubble-Windows-x64
+          path: Linka.Bubble.Setup.exe

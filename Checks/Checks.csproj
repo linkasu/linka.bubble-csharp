@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Bubble/GazeFilter.cs" Link="GazeFilter.cs" />
+    <Compile Include="../Bubble/GazeDisplayState.cs" Link="GazeDisplayState.cs" />
+    <Compile Include="../Bubble/BubbleSettings.cs" Link="BubbleSettings.cs" />
+  </ItemGroup>
+</Project>

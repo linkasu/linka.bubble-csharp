@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+if command -v dotnet >/dev/null 2>&1; then
+    dotnet build Bubble/Bubble.csproj -c Release -p:Platform=x64
+    dotnet run --project Checks/Checks.csproj -c Release
+else
+    printf '%s\n' 'dotnet unavailable locally; Windows CI runs the build and checks.' >&2
+fi
